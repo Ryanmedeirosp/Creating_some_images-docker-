@@ -5,7 +5,7 @@ server {
 
        
 
-        root /var/www/html/html/wordpress;
+        root /var/www/html/wordpress; #/var/www/html/html/wordpress com volume
 
         # Add index.php to the list if you are using PHP
         index index.php index.html index.htm index.nginx-debian.html;

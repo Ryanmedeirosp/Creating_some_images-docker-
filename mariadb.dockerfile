@@ -13,9 +13,12 @@ RUN /etc/init.d/mariadb start && mysql -u root -e  "CREATE USER 'wordpress'@'%' 
  FLUSH PRIVILEGES;"
 
 ## Configuração para habilitar o acesso remoto
-# RUN sed -i -e "/bind-address/ s/^/#/" -e "/bind-address/ asql-mode=\"NO_ENGINE_SUBSTITUTION\"" /etc/mysql/mariadb.conf.d/50-server.cnf
+
 # [Source: <https://mariadb.com/kb/en/configuring-mariadb-for-remote-client-access/>]
-RUN sed -i -e "/bind-address/ s/^/#/" -e "/[mysqld]/ askip-networking=0\nskip-bind-address" /etc/mysql/mariadb.conf.d/50-server.cnf
-# RUN sed -i -e "/port/ s/^# //" -e "/^socket/ s/^/#/" /etc/mysql/mariadb.cnf
+#RUN sed -i -e "/bind-address/ s/^/#/" -e "/\[mysqld\]/ askip-networking=0\nskip-bind-address" /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN sed -i "s/^bind-address.*$/bind-address = 0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
+
 
 CMD ["mariadbd","--user=root"]
+
+#  docker run -it -p 3306:3306 --network wordpress-net --name mariadb  mariadb
